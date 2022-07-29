@@ -69,6 +69,7 @@ if (argv.a) {
   let interval = 0
   let arrInd = 0
   let inc = 0;
+  let usedArray = []
 
 
   let array = ["U can listen to some music while waiting ", "Orgasm improves sperm quality", "Sex protects against cancer",
@@ -91,7 +92,7 @@ if (argv.a) {
 
   console.log(boxen(chalk.red("\n this is a pre-release of react cli  \n v1.0.0 \n"
   ), { title: 'REACT-CLI', titleAlignment: 'center', borderColor: 'green', dimBorder: true }) + "\n");
-  process.stdout.write(chalk.hex('#83aaff')("While waiting , here are some fun facts you might not know ! \n"));
+  process.stdout.write(chalk.hex('#83aaff')("While waiting , get amused by these fun facts 😉! \n"));
 
   inquirer
     .prompt([
@@ -103,37 +104,41 @@ if (argv.a) {
       }
     ])
     .then((answers) => {
-      process.stdout.write(chalk.hex('#32cd32')("Have fun while establishing your project !\n"));
+      
+      process.stdout.write(chalk.hex('#32cd32')("Have fun , we will take after your baby project !\n"));
 
       if (answers.fact === "+18") {
         arrInd = array.length
+        usedArray = array
       }
       else if (answers.fact === "fun") {
         arrInd = array3.length
+        usedArray = array3
       }
       else if (answers.fact === "random") {
         arrInd = array2.length
+        usedArray = array2
       }
       interval = setInterval(() => {
-        if (inc === arrInd) {
+        if (inc == arrInd) {
           inc = 0;
         }
 
 
-        process.stdout.write(chalk.hex('#83aaff')(array[inc]));
+        process.stdout.write(chalk.hex('#83aaff')(usedArray[inc++]));
         setTimeout(() => {
           process.stdout.clearLine();
           process.stdout.cursorTo(0);
-          inc++
-        }, 2400)
 
-      }, 3000);
+        }, 4500)
+
+      }, 5000);
       execCmd("npx create-react-app " + argv.a).then(() => {
 
         clearInterval(interval);
         console.log("\n" + boxen(chalk.green("\n  React project : " + argv.a + " is created successfully \n"
         ), { padding: 1, borderColor: 'green', dimBorder: true }) + "\n");
-        execCmd("cd " + argv.a + "&& code . && npm start").then(() => {
+        execCmd("cd " + argv.a + " | code . ").then(() => {
           process.exit(1);
         })
 
@@ -194,7 +199,7 @@ if (argv.component && argv.name) {
 }
 else (argv.help)
 {
-  console.log('try react-cli -h to see the documentation')
+  console.log('\n\n 😇 try react-cli -h to learn more')
 }
 
 
