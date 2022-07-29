@@ -18,7 +18,10 @@
 - ``` react-cli -h  ```
 - __Done__
 
+<img src = "https://github.com/abderox/pre-react-cli/blob/master/cap_2.png" alt="capture" align="center"/>
+
 <img src = "https://github.com/abderox/pre-react-cli/blob/master/cli_cap.png" alt="capture" align="center"/>
+
 
 :bangbang:
 > :trollface: I WILL COME UP WITH BETTER NEXT TIME  !!
