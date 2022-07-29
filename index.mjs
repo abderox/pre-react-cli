@@ -3,7 +3,6 @@ import yargs from 'yargs'
 import fs from 'fs'
 import chalk from 'chalk';
 import boxen from 'boxen';
-import request from 'request'
 import _cliProgress from 'cli-progress';
 import util from 'util';
 import { exec } from 'child_process';
@@ -12,9 +11,9 @@ import inquirer from 'inquirer';
 
 
 
-const progressBar = new _cliProgress.SingleBar({
-  format: '{bar} {percentage}% | ETA: {eta}s | {value}/{total}'
-}, _cliProgress.Presets.shades_classic);
+// const progressBar = new _cliProgress.SingleBar({
+//   format: '{bar} {percentage}% | ETA: {eta}s | {value}/{total}'
+// }, _cliProgress.Presets.shades_classic);
 
 const execCmd = async (cmd) => {
   try {
@@ -32,7 +31,7 @@ const execCmd = async (cmd) => {
 }
 
 // const usage = chalk.hex('#83aaff')("Usage: $0 -c arrow-fn -n <name>");
-const target_directory = './components/';
+const target_directory = './src/components/';
 const { argv } = yargs(process.argv).scriptName("react-cli")
   .usage("Usage: $0 -c arrow-fn -n <name>")
   .example(
@@ -74,19 +73,19 @@ if (argv.a) {
 
   let array = ["U can listen to some music while waiting ", "Orgasm improves sperm quality", "Sex protects against cancer",
     "Less sex, more work", "People in their 20s are most active", "70 percent of men watch porn…", " There is such a thing as being too horny", "Sex drive + increased years of life = not a sexy combo", "Practice makes frequent", "Working out makes workin’ it out better",
-    "You can learn by sexperience", "You can climax your stress away", "The left testicle usually hangs lower than the right for right-handed men. The opposite is true for lefties.", "The left testicle usually hangs lower than the right for right-handed men. The opposite is true for lefties.",
+    "You can learn by sexperience", "You can climax your stress away", "The left testicle usually hangs lower than the right for right-handed men. ", "The left testicle usually hangs lower than the right for right-handed men. The opposite is true for lefties.",
     "When two people kiss, they exchange between 10 million and 1 billion bacteria."
   ]
   let array2 = ["The scientific term for brain freeze is “sphenopalatine ganglioneuralgia”", "Back when dinosaurs existed, there used to be volcanoes that were erupting on the moon.",
     "Back when dinosaurs existed, there used to be volcanoes that were erupting on the moon.",
-    "In 2006, a Coca-Cola employee offered to sell Coca-Cola secrets to Pepsi. Pepsi responded by notifying Coca-Cola.",
+    "In 2006, a Coca-Cola employee offered to sell Coca-Cola secrets to Pepsi. ",
     "A single strand of Spaghetti is called a “Spaghetto”.", "The first movie ever to put out a motion-picture soundtrack was Snow White and the Seven Dwarves."
   ];
   let array3 = ["American flags left on the moon will eventually get bleached white by the sun",
     "Gummy bears were originally called 'dancing bears'.", "New Zealand has more cats per person than any other country in the world", "The yo-yo was originally a weapon used in the Philippine jungle",
     "Victor Hugo’s novel Les Miserable contains a sentence that is 823 words long",
     "Alexander the Great was the first person to be pictured on a coin",
-    "At an average of 15 breaths per minute, we take about 400 million breaths during a lifetime. This is equivalent to about 53 million gallons of air"
+    "At an average of 15 breaths per minute, we take about 400 million breaths during a lifetime." ," This is equivalent to about 53 million gallons of air"
   ]
 
 
@@ -136,18 +135,15 @@ if (argv.a) {
       execCmd("npx create-react-app " + argv.a).then(() => {
 
         clearInterval(interval);
-        console.log("\n" + boxen(chalk.green("\n  React project : " + argv.a + " is created successfully \n"
+        console.log("\n" + boxen(chalk.green("\n  React project : " + argv.a + " is created successfully \n  Started at : http://localhost:3000/"
         ), { padding: 1, borderColor: 'green', dimBorder: true }) + "\n");
-        execCmd("cd " + argv.a + " | code . ").then(() => {
+
+        execCmd("cd " + argv.a + " && npm start ").then(() => {
           process.exit(1);
         })
 
       })
     });
-
-
-
-
 
 
 }

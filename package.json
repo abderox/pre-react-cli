@@ -1,6 +1,6 @@
 {
-  "name": "react-cli",
-  "version": "1.0.0",
+  "name": "pre-react-cli",
+  "version": "1.0.1",
   "description": "react cli components creation ... ",
   "main": "index.js",
   "scripts": {
