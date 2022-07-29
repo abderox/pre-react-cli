@@ -1,10 +1,35 @@
 #! /usr/bin/env node
 import yargs from 'yargs'
 import fs from 'fs'
-import { exec } from "child_process";
 import chalk from 'chalk';
-
 import boxen from 'boxen';
+import request from 'request'
+import _cliProgress from 'cli-progress';
+import util from 'util';
+import { exec } from 'child_process';
+const execute = util.promisify(exec);
+import inquirer from 'inquirer';
+
+
+
+const progressBar = new _cliProgress.SingleBar({
+  format: '{bar} {percentage}% | ETA: {eta}s | {value}/{total}'
+}, _cliProgress.Presets.shades_classic);
+
+const execCmd = async (cmd) => {
+  try {
+
+    const { stdout, stderr } = await execute(cmd);
+
+    console.log('stdout:', stdout);
+    console.error('stderr:', stderr);
+
+  }
+  catch (err) {
+    console.error("\n" + boxen(chalk.red("\n Something went wrong while creating react app\n"
+    ), { padding: 1, borderColor: 'red', dimBorder: true }) + "\n")
+  }
+}
 
 // const usage = chalk.hex('#83aaff')("Usage: $0 -c arrow-fn -n <name>");
 const target_directory = './components/';
@@ -34,25 +59,91 @@ const { argv } = yargs(process.argv).scriptName("react-cli")
   })
   .describe("help", "Show help.")
   .describe("version", "Show version number.")
-  .epilog("copyright 2022");
+  .epilog("copyright 2022")
+
+  ;
 
 
 if (argv.a) {
 
-  console.log("\n" + boxen(chalk.blue("\n Just keep waiting  \n Trying my best , don't push me harder \n"
-  ), { padding: 1, borderColor: 'green', dimBorder: true }) + "\n");
+  let interval = 0
+  let arrInd = 0
+  let inc = 0;
 
-  exec("npx create-react-app " + argv.a, (error, stdout, stderr) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-  });
+
+  let array = ["U can listen to some music while waiting ", "Orgasm improves sperm quality", "Sex protects against cancer",
+    "Less sex, more work", "People in their 20s are most active", "70 percent of men watch porn…", " There is such a thing as being too horny", "Sex drive + increased years of life = not a sexy combo", "Practice makes frequent", "Working out makes workin’ it out better",
+    "You can learn by sexperience", "You can climax your stress away", "The left testicle usually hangs lower than the right for right-handed men. The opposite is true for lefties.", "The left testicle usually hangs lower than the right for right-handed men. The opposite is true for lefties.",
+    "When two people kiss, they exchange between 10 million and 1 billion bacteria."
+  ]
+  let array2 = ["The scientific term for brain freeze is “sphenopalatine ganglioneuralgia”", "Back when dinosaurs existed, there used to be volcanoes that were erupting on the moon.",
+    "Back when dinosaurs existed, there used to be volcanoes that were erupting on the moon.",
+    "In 2006, a Coca-Cola employee offered to sell Coca-Cola secrets to Pepsi. Pepsi responded by notifying Coca-Cola.",
+    "A single strand of Spaghetti is called a “Spaghetto”.", "The first movie ever to put out a motion-picture soundtrack was Snow White and the Seven Dwarves."
+  ];
+  let array3 = ["American flags left on the moon will eventually get bleached white by the sun",
+    "Gummy bears were originally called 'dancing bears'.", "New Zealand has more cats per person than any other country in the world", "The yo-yo was originally a weapon used in the Philippine jungle",
+    "Victor Hugo’s novel Les Miserable contains a sentence that is 823 words long",
+    "Alexander the Great was the first person to be pictured on a coin",
+    "At an average of 15 breaths per minute, we take about 400 million breaths during a lifetime. This is equivalent to about 53 million gallons of air"
+  ]
+
+
+  console.log(boxen(chalk.red("\n this is a pre-release of react cli  \n v1.0.0 \n"
+  ), { title: 'REACT-CLI', titleAlignment: 'center', borderColor: 'green', dimBorder: true }) + "\n");
+  process.stdout.write(chalk.hex('#83aaff')("While waiting , here are some fun facts you might not know ! \n"));
+
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "fact",
+        message: "Select a type",
+        choices: ["random", "fun", "+18"]
+      }
+    ])
+    .then((answers) => {
+      process.stdout.write(chalk.hex('#32cd32')("Have fun while establishing your project !\n"));
+
+      if (answers.fact === "+18") {
+        arrInd = array.length
+      }
+      else if (answers.fact === "fun") {
+        arrInd = array3.length
+      }
+      else if (answers.fact === "random") {
+        arrInd = array2.length
+      }
+      interval = setInterval(() => {
+        if (inc === arrInd) {
+          inc = 0;
+        }
+
+
+        process.stdout.write(chalk.hex('#83aaff')(array[inc]));
+        setTimeout(() => {
+          process.stdout.clearLine();
+          process.stdout.cursorTo(0);
+          inc++
+        }, 2400)
+
+      }, 3000);
+      execCmd("npx create-react-app " + argv.a).then(() => {
+
+        clearInterval(interval);
+        console.log("\n" + boxen(chalk.green("\n  React project : " + argv.a + " is created successfully \n"
+        ), { padding: 1, borderColor: 'green', dimBorder: true }) + "\n");
+        execCmd("cd " + argv.a + "&& code . && npm start").then(() => {
+          process.exit(1);
+        })
+
+      })
+    });
+
+
+
+
+
 
 }
 if (argv.component && argv.name) {
@@ -105,5 +196,6 @@ else (argv.help)
 {
   console.log('try react-cli -h to see the documentation')
 }
+
 
 
