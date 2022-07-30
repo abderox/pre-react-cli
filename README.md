@@ -1,6 +1,6 @@
 # :computer: pre-react-cli
 
-## Author
+[![NPM version](https://www.npmjs.com/package/pre-react-cli)
 
 - ## :eyeglasses: [abderox](https://github.com/abderox/)
 
