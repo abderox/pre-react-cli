@@ -1,6 +1,6 @@
 # :computer: pre-react-cli
 
-[![NPM version](https://www.npmjs.com/package/pre-react-cli)
+[![NPM version](https://badge.fury.io/js/your-project-name.svg)](https://www.npmjs.com/package/pre-react-cli)
 
 - ## :eyeglasses: [abderox](https://github.com/abderox/)
 
