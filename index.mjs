@@ -14,6 +14,8 @@ import inquirer from 'inquirer';
 // const progressBar = new _cliProgress.SingleBar({
 //   format: '{bar} {percentage}% | ETA: {eta}s | {value}/{total}'
 // }, _cliProgress.Presets.shades_classic);
+const component_directory = './src/components/';
+const pages_directory = './src/pages/';
 
 const execCmd = async (cmd) => {
   try {
@@ -30,8 +32,15 @@ const execCmd = async (cmd) => {
   }
 }
 
+async function createDir(dir) {
+  try {
+    await fs.promises.access(dir, fs.constants.F_OK);
+  } catch (e) {
+    await fs.promises.mkdir(dir);
+  }
+}
 // const usage = chalk.hex('#83aaff')("Usage: $0 -c arrow-fn -n <name>");
-const target_directory = './src/components/';
+
 const { argv } = yargs(process.argv).scriptName("react-cli")
   .usage("Usage: $0 -c arrow-fn -n <name>")
   .example(
@@ -46,6 +55,11 @@ const { argv } = yargs(process.argv).scriptName("react-cli")
   .option("a", {
     alias: "react-app",
     describe: "create react app ",
+
+  })
+  .option("p", {
+    alias: "pages",
+    describe: "create pages ",
 
   })
   .option("n", {
@@ -85,7 +99,7 @@ if (argv.a) {
     "Gummy bears were originally called 'dancing bears'.", "New Zealand has more cats per person than any other country in the world", "The yo-yo was originally a weapon used in the Philippine jungle",
     "Victor Hugo’s novel Les Miserable contains a sentence that is 823 words long",
     "Alexander the Great was the first person to be pictured on a coin",
-    "At an average of 15 breaths per minute, we take about 400 million breaths during a lifetime." ," This is equivalent to about 53 million gallons of air"
+    "At an average of 15 breaths per minute, we take about 400 million breaths during a lifetime.", " This is equivalent to about 53 million gallons of air"
   ]
 
 
@@ -103,7 +117,7 @@ if (argv.a) {
       }
     ])
     .then((answers) => {
-      
+
       process.stdout.write(chalk.hex('#32cd32')("Have fun , we will take after your baby project !\n"));
 
       if (answers.fact === "+18") {
@@ -149,8 +163,8 @@ if (argv.a) {
 }
 if (argv.component && argv.name) {
   try {
-    if (!fs.existsSync(target_directory)) {
-      fs.mkdirSync(target_directory);
+    if (!fs.existsSync(component_directory)) {
+      fs.mkdirSync(component_directory);
     }
 
     if (argv.component === "arrow-fn") {
@@ -164,7 +178,7 @@ if (argv.component && argv.name) {
     }
     `
 
-      fs.writeFile(target_directory + argv.n + '.js', str, (err) => {
+      fs.writeFile(component_directory + argv.n + '.js', str, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
       });
@@ -181,7 +195,7 @@ if (argv.component && argv.name) {
       
     `
 
-      fs.writeFile(target_directory + argv.n + '.js', str, (err) => {
+      fs.writeFile(component_directory + argv.n + '.js', str, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
       });
@@ -191,6 +205,22 @@ if (argv.component && argv.name) {
 
   catch (e) {
     console.log("error")
+  }
+}
+if (argv.p) {
+  try {
+
+    await createDir(pages_directory).then(() => {
+      fs.writeFile(pages_directory + "home" + '.js', "import React from 'react';", (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+      });
+    })
+
+
+  }
+  catch (e) {
+    console.error(e)
   }
 }
 else (argv.help)
