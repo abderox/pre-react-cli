@@ -16,6 +16,7 @@ import inquirer from 'inquirer';
 // }, _cliProgress.Presets.shades_classic);
 const component_directory = './src/components/';
 const pages_directory = './src/pages/';
+const routes_directory = './src/routes/';
 
 const execCmd = async (cmd) => {
   try {
@@ -41,20 +42,25 @@ async function createDir(dir) {
 }
 // const usage = chalk.hex('#83aaff')("Usage: $0 -c arrow-fn -n <name>");
 
-const { argv } = yargs(process.argv).scriptName("react-cli")
+const { argv } = yargs(process.argv).scriptName("lrcl")
   .usage("Usage: $0 -c arrow-fn -n <name>")
   .example(
     "$0 -c arrow-fn -n <name>"
 
   )
+  .option("a", {
+    alias: "react-app",
+    describe: "create react app ",
+
+  })
   .option("c", {
     alias: "component",
     describe: "create a functional component  <fn : function> , <arrow-fn : arrow function>",
 
   })
-  .option("a", {
-    alias: "react-app",
-    describe: "create react app ",
+  .option("r", {
+    alias: "routes",
+    describe: "create routes ",
 
   })
   .option("p", {
@@ -214,6 +220,22 @@ if (argv.p) {
       fs.writeFile(pages_directory + "home" + '.js', "import React from 'react';", (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
+      });
+    })
+
+
+  }
+  catch (e) {
+    console.error(e)
+  }
+}
+if (argv.r) {
+  try {
+
+    await createDir(routes_directory).then(() => {
+      fs.writeFile(routes_directory + "route" + '.js', "import React from 'react';", (err) => {
+        if (err) throw err;
+        console.log('Created successfully');
       });
     })
 
